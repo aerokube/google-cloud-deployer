@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-moon
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    app.kubernetes.io/component: moon
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Release.Name }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}
+        app.kubernetes.io/component: moon
+    spec:
+      containers:
+      - name: moon
+        image: {{ .Values.moon.image }}
+        args:
+        - -namespace
+        - {{ .Release.Namespace }}
+        - -license-file
+        - /license/license.key
+        - -listen
+        - :{{ .Values.moon.port }}
+        resources:
+{{ toYaml .Values.moon.resources | indent 10 }}
+        ports:
+        - containerPort: {{ .Values.moon.port }}
+        volumeMounts:
+        - name: quota
+          mountPath: /quota
+          readOnly: true
+        - name: users
+          mountPath: /users
+          readOnly: true
+        - name: licensekey
+          mountPath: /license
+          readOnly: true
+      - name: moon-api
+        image: {{ .Values.moonAPI.image }}
+        args:
+        - -namespace
+        - {{ .Release.Namespace }}
+        - -license-file
+        - /license/license.key
+        - -listen
+        - :{{ .Values.moonAPI.port }}
+        resources:
+{{ toYaml .Values.moonAPI.resources | indent 10 }}
+        ports:
+        - containerPort: {{ .Values.moonAPI.port }}
+        volumeMounts:
+        - name: quota
+          mountPath: /quota
+        - name: licensekey
+          mountPath: /license
+          readOnly: true
+      - name: moon-ui
+        image: {{ .Values.moonUI.image }}
+        args:
+        - -listen
+        - :{{ .Values.moonUI.port }}
+        - -status-uri
+        - http://localhost:{{ .Values.moonAPI.port }}
+        - -webdriver-uri
+        - http://localhost:{{ .Values.moon.port }}
+        resources:
+{{ toYaml .Values.moonUI.resources | indent 10 }}
+        ports:
+        - name: moon-ui
+          containerPort: {{ .Values.moonUI.port }}
+      volumes:
+      - name: quota
+        configMap:
+          name: {{ .Release.Name }}-quota
+      - name: users
+        secret:
+          secretName: {{ .Release.Name }}-users
+      - name: licensekey
+        secret:
+          secretName: {{ .Release.Name }}-licensekey

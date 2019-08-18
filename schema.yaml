@@ -1,0 +1,39 @@
+applicationApiVersion: v1beta1
+
+properties:
+  name:
+    type: string
+    x-google-marketplace:
+      type: NAME
+  namespace:
+    type: string
+    x-google-marketplace:
+      type: NAMESPACE
+  moon.image:
+    type: string
+    default: $REGISTRY:$TAG
+    x-google-marketplace:
+      type: IMAGE
+  moonAPI.image:
+    type: string
+    default: $REGISTRY/moon-api:$TAG
+    x-google-marketplace:
+      type: IMAGE
+  moonUI.image:
+    type: string
+    default: $REGISTRY/selenoid-ui:$TAG
+    x-google-marketplace:
+      type: IMAGE
+  replicaCount:
+    type: integer
+    title: Replicas
+    description: The number of Pods run within Moon
+    default: 2
+    minimum: 1
+required:
+- name
+- namespace
+- moon.image
+- moonAPI.image
+- moonUI.image
+- replicaCount
