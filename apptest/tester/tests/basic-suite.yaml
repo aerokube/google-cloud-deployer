@@ -1,0 +1,13 @@
+actions:
+- name: Webdriver address should be 200 OK
+  httpTest:
+    url: http://{{ .Env.EXTERNAL_IP }}:4444
+    expect:
+      statusCode:
+        equals: 200
+- name: Moon UI address should be 200 OK
+  httpTest:
+    url: http://{{ .Env.EXTERNAL_IP }}:8080
+    expect:
+      statusCode:
+        equals: 200
