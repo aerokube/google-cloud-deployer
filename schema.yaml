@@ -21,7 +21,7 @@ properties:
       type: IMAGE
   moonUI.image:
     type: string
-    default: $REGISTRY/selenoid-ui:$TAG
+    default: $REGISTRY/selenoid-ui:$SELENOID_UI_TAG
     x-google-marketplace:
       type: IMAGE
   replicaCount:

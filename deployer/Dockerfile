@@ -1,5 +1,5 @@
 ARG MARKETPLACE_TOOLS_TAG
-FROM marketplace.gcr.io/google/debian9 AS build
+FROM gcr.io/google-appengine/debian9 AS build
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gettext
@@ -15,9 +15,10 @@ ADD schema.yaml /tmp/schema.yaml
 
 ARG REGISTRY
 ARG TAG
+ARG SELENOID_UI_TAG
 
 RUN cat /tmp/schema.yaml \
-    | env -i "REGISTRY=$REGISTRY" "TAG=$TAG" envsubst \
+    | env -i "REGISTRY=$REGISTRY" "TAG=$TAG" "SELENOID_UI_TAG=$SELENOID_UI_TAG" envsubst \
     > /tmp/schema.yaml.new \
     && mv /tmp/schema.yaml.new /tmp/schema.yaml
 
