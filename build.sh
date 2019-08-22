@@ -33,7 +33,7 @@ require_command "echo"
 
 echo "Marketplace tools tags can be listed with 'gcloud container images list-tags gcr.io/cloud-marketplace-tools/k8s/deployer_helm' command."
 marketplace_tools_tag=$(request_answer "Specify marketplace tools tag:" "0.8.0")
-moon_version=$(request_answer "Specify Moon version:" "1.3.7")
+moon_version=$(request_answer "Specify Moon version:" "1.3.8")
 selenoid_ui_version=$(request_answer "Specify Selenoid UI version:" "1.8.1")
 
 moon_major_version="$(cut -d'.' -f1 <<<${moon_version})"
