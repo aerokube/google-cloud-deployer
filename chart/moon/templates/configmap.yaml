@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -8,3 +9,15 @@ metadata:
 data:
   browsers.json: |
 {{ .Values.browsers | toJson | indent 4 }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    app.kubernetes.io/component: moon
+data:
+  service.json: |
+{{ .Values.config | toJson | indent 4 }}

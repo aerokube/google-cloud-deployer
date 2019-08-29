@@ -31,6 +31,9 @@ spec:
         ports:
         - containerPort: {{ .Values.moon.port }}
         volumeMounts:
+        - name: config
+          mountPath: /config
+          readOnly: true
         - name: quota
           mountPath: /quota
           readOnly: true
@@ -54,8 +57,12 @@ spec:
         ports:
         - containerPort: {{ .Values.moonAPI.port }}
         volumeMounts:
+        - name: config
+          mountPath: /config
+          readOnly: true
         - name: quota
           mountPath: /quota
+          readOnly: true
         - name: licensekey
           mountPath: /license
           readOnly: true
@@ -74,6 +81,9 @@ spec:
         - name: moon-ui
           containerPort: {{ .Values.moonUI.port }}
       volumes:
+      - name: config
+        configMap:
+          name: {{ .Release.Name }}-config
       - name: quota
         configMap:
           name: {{ .Release.Name }}-quota

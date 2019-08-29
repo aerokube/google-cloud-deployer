@@ -3,37 +3,73 @@ applicationApiVersion: v1beta1
 properties:
   name:
     type: string
+    title: "Application name"
+    description: "Human-readable Kubernetes application name"
+    default: "moon"
     x-google-marketplace:
       type: NAME
   namespace:
     type: string
+    title: "Kubernetes namespace"
+    description: "Name of the Kubernetes namespace to use"
+    default: "moon"
     x-google-marketplace:
       type: NAMESPACE
+  replicaCount:
+    type: integer
+    title: "Number of replicas"
+    description: "How many copies of Moon to run (2 or more are recommended)"
+    default: 2
+    minimum: 1
   moon.image:
     type: string
+    title: "Moon image"
+    description: "Moon image reference in Docker format"
     default: $REGISTRY:$TAG
     x-google-marketplace:
       type: IMAGE
   moonAPI.image:
     type: string
+    title: "Moon API image"
+    description: "Moon API image reference in Docker format"
     default: $REGISTRY/moon-api:$TAG
     x-google-marketplace:
       type: IMAGE
   moonUI.image:
     type: string
+    title: "Moon UI image"
+    description: "Moon UI image reference in Docker format"
     default: $REGISTRY/selenoid-ui:$SELENOID_UI_TAG
     x-google-marketplace:
       type: IMAGE
-  replicaCount:
-    type: integer
-    title: Replicas
-    description: The number of Pods run within Moon
-    default: 2
-    minimum: 1
+  config.images.videoRecorder.image:
+    type: string
+    title: "Moon video recorder image"
+    description: "Moon video recorder image reference in Docker format"
+    default: $REGISTRY/moon-video-recorder:$TAG
+    x-google-marketplace:
+      type: IMAGE
+  config.images.logger.image:
+    type: string
+    title: "Moon logger image"
+    description: "Moon logger image reference in Docker format"
+    default: $REGISTRY/logger:$TAG
+    x-google-marketplace:
+      type: IMAGE
+  config.images.defender.image:
+    type: string
+    title: "Moon defender image"
+    description: "Moon defender image reference in Docker format"
+    default: $REGISTRY/defender:$TAG
+    x-google-marketplace:
+      type: IMAGE
 required:
 - name
 - namespace
+- replicaCount
 - moon.image
 - moonAPI.image
 - moonUI.image
-- replicaCount
+- config.images.videoRecorder.image
+- config.images.logger.image
+- config.images.defender.image
