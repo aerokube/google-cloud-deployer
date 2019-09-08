@@ -4,7 +4,15 @@ FROM gcr.io/google-appengine/debian9 AS build
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gettext
 
+ARG REGISTRY
+ARG TAG
+ARG SELENOID_UI_TAG
+
 ADD chart/moon /tmp/chart
+RUN cat /tmp/chart/Chart.yaml \
+    | env -i "TAG=$TAG" envsubst \
+    > /tmp/chart/Chart.yaml.new \
+    && mv /tmp/chart/Chart.yaml.new /tmp/chart/Chart.yaml
 RUN cd /tmp && tar -czvf /tmp/moon.tar.gz chart
 
 ADD apptest/deployer/moon /tmp/test/chart
@@ -12,10 +20,6 @@ RUN cd /tmp/test \
     && tar -czvf /tmp/test/moon.tar.gz chart/
 
 ADD schema.yaml /tmp/schema.yaml
-
-ARG REGISTRY
-ARG TAG
-ARG SELENOID_UI_TAG
 
 RUN cat /tmp/schema.yaml \
     | env -i "REGISTRY=$REGISTRY" "TAG=$TAG" "SELENOID_UI_TAG=$SELENOID_UI_TAG" envsubst \

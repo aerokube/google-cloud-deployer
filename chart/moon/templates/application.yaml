@@ -2,7 +2,6 @@ apiVersion: app.k8s.io/v1beta1
 kind: Application
 metadata:
   name: {{ .Release.Name }}
-  namespace: {{ .Release.Namespace }}
   annotations:
     kubernetes-engine.cloud.google.com/icon: >-
       data:image/png;base64,{{ .Files.Get "logo.png" | b64enc }}
@@ -12,7 +11,43 @@ metadata:
 spec:
   descriptor:
     type: Moon
-    version: '1.3'
+    version: {{ .Chart.Version }}
+    description: |-
+      Moon is an efficient Selenium browser automation solution with zero-effort maintenance.
+      It comes with predefined set of images for different browsers and platforms.
+
+      # Support
+      You can get official support using the following channels:
+      * [E-mail](mailto:support@aerokube.com)
+      * [Telegram](https://t.me/aerokube_moon)
+    maintainers:
+      - name: Aerokube Software
+        url: https://aerokube.com/
+    links:
+      - description: 'Official Documentation'
+        url: https://aerokube.com/moon/latest
+    notes: |-
+      # Installing a license key
+
+      Moon comes with a free license key allowing to run up to 4 parallel Selenium sessions for unlimited period of time. If you need more parallel sessions - you have to [purchase](mailto:sales@aerokube.com) a license key. Having a license key - install it as follows:
+
+      ```shell
+      $ kubectl edit secret {{ .Release.Name }}-licensekey
+      ```
+  info:
+    - name: Moon Selenium access URL
+      type: Reference
+      valueFrom:
+        serviceRef:
+          name: "{{ .Release.Name }}-moon"
+          port: {{ .Values.moon.port }}
+          path: "/wd/hub"
+    - name: Moon UI access URL
+      type: Reference
+      valueFrom:
+        serviceRef:
+          name: "{{ .Release.Name }}-moon"
+          port: {{ .Values.moonUI.port }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ .Release.Name }}
