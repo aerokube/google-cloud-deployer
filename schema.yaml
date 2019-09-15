@@ -73,3 +73,13 @@ required:
 - config.images.videoRecorder.image
 - config.images.logger.image
 - config.images.defender.image
+x-google-marketplace:
+  clusterConstraints:
+    resources:
+      - replicas: 2
+        requests:
+          cpu: 4000m
+          memory: 8Gi
+        affinity:
+          simpleNodeAffinity:
+            type: REQUIRE_ONE_NODE_PER_REPLICA
