@@ -412,16 +412,16 @@ browsers:
     default: '65.0'
     versions:
       '65.0':
-        image: selenoid/vnc_opera:60.0
+        image: selenoid/vnc_opera:65.0
         port: '4444'
       '64.0':
-        image: selenoid/vnc_opera:60.0
+        image: selenoid/vnc_opera:64.0
         port: '4444'
       '63.0':
-        image: selenoid/vnc_opera:60.0
+        image: selenoid/vnc_opera:63.0
         port: '4444'
       '62.0':
-        image: selenoid/vnc_opera:60.0
+        image: selenoid/vnc_opera:62.0
         port: '4444'
       '60.0':
         image: selenoid/vnc_opera:60.0
