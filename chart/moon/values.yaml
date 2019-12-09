@@ -38,8 +38,12 @@ config:
 
 browsers:
   firefox:
-    default: '69.0'
+    default: '70.0'
     versions:
+      '70.0':
+        image: selenoid/vnc_firefox:70.0
+        port: '4444'
+        path: "/wd/hub"
       '69.0':
         image: selenoid/vnc_firefox:69.0
         port: '4444'
@@ -309,8 +313,11 @@ browsers:
         port: '4444'
         path: "/wd/hub"
   chrome:
-    default: '77.0'
+    default: '78.0'
     versions:
+      '78.0':
+        image: selenoid/vnc_chrome:78.0
+        port: '4444'
       '77.0':
         image: selenoid/vnc_chrome:77.0
         port: '4444'
@@ -402,8 +409,20 @@ browsers:
         image: selenoid/vnc_chrome:48.0
         port: '4444'
   opera:
-    default: '60.0'
+    default: '65.0'
     versions:
+      '65.0':
+        image: selenoid/vnc_opera:60.0
+        port: '4444'
+      '64.0':
+        image: selenoid/vnc_opera:60.0
+        port: '4444'
+      '63.0':
+        image: selenoid/vnc_opera:60.0
+        port: '4444'
+      '62.0':
+        image: selenoid/vnc_opera:60.0
+        port: '4444'
       '60.0':
         image: selenoid/vnc_opera:60.0
         port: '4444'
