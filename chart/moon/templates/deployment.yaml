@@ -26,6 +26,8 @@ spec:
         - /license/license.key
         - -listen
         - :{{ .Values.moon.port }}
+        - -moon-url
+        - http://{{ .Release.Name }}-moon:4444/wd/hub
         resources:
 {{ toYaml .Values.moon.resources | indent 10 }}
         ports:
@@ -52,8 +54,6 @@ spec:
         - /license/license.key
         - -listen
         - :{{ .Values.moonAPI.port }}
-        - -moon-url
-        - http://{{ .Release.Name }}-moon:4444/wd/hub
         resources:
 {{ toYaml .Values.moonAPI.resources | indent 10 }}
         ports:

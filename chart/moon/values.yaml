@@ -38,8 +38,12 @@ config:
 
 browsers:
   firefox:
-    default: '70.0'
+    default: '71.0'
     versions:
+      '71.0':
+        image: selenoid/vnc_firefox:70.0
+        port: '4444'
+        path: "/wd/hub"
       '70.0':
         image: selenoid/vnc_firefox:70.0
         port: '4444'
