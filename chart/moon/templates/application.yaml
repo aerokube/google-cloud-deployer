@@ -29,11 +29,13 @@ spec:
     notes: |-
       # Installing a license key
 
-      Moon comes with a free license key allowing to run up to 4 parallel Selenium sessions for unlimited period of time. If you need more parallel sessions - you have to [purchase](mailto:sales@aerokube.com) a license key. Having a license key - install it as follows:
+      Moon comes with a free license key allowing to run up to 4 parallel Selenium sessions for unlimited period of time. If you need more parallel sessions - you have to [purchase](mailto:sales@aerokube.com) a license key. A trial license key with 50 parallel sessions can be generated on our https://aerokube.com/moon/[website]. Having a license key - install it as follows:
 
       ```shell
-      $ kubectl edit secret {{ .Release.Name }}-licensekey
+      $ kubectl edit secret {{ .Release.Name }}-licensekey -n moon
       ```
+
+      After changing the secret license key will be applied without Moon restart. How fast this will be done depends on so-called "secrets caching time". Default value is `1 minute` but can be adjusted by Kubernetes administrator.
   info:
     - name: Moon Selenium access URL
       type: Reference
