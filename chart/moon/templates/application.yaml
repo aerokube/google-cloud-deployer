@@ -36,6 +36,10 @@ spec:
       ```
 
       After changing the secret license key will be applied without Moon restart. How fast this will be done depends on so-called "secrets caching time". Default value is `1 minute` but can be adjusted by Kubernetes administrator.
+
+      # Customized deployment
+
+      This version is mainly useful for quickly trying Moon with default settings. In order to get fully customizable Moon instance - use our [official YAML manifests](https://github.com/aerokube/moon-deploy).
   info:
     - name: Moon Selenium access URL
       type: Reference
